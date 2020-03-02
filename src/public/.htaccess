@@ -1,0 +1,14 @@
+# Non-www for portacode.com
+RewriteCond %{HTTP_HOST}   ^www\.portacode\.com$ [NC]
+RewriteRule ^(.*)$ https://portacode.com/$1 [L,R=301]
+# End Non-www for portacode.com
+
+# Force SSL
+RewriteCond %{HTTPS} !on
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# End Force SSL
+
+#All to index.php
+RewriteCond %{REQUEST_URI} !^/index\.php$ [NC]
+RewriteRule ^(.*)$ /index.php?resource=$1 [L,QSA]
+#End All to index.php
