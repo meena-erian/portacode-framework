@@ -1,14 +1,20 @@
-# Non-www for portacode.com
+
+# Non-www for portacode.com & remove trailing slashes
 RewriteCond %{HTTP_HOST}   ^www\.portacode\.com$ [NC]
-RewriteRule ^(.*)$ https://portacode.com/$1 [L,R=301]
+RewriteRule ^(.*)\/$ https://portacode.com/$1 [L,R=301]
 # End Non-www for portacode.com
 
-# Force SSL
+# Force SSL & remove trailing slashes
 RewriteCond %{HTTPS} !on
-RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+RewriteRule ^(.*)\/$ https://%{HTTP_HOST}/$1 [L,R=301]
 # End Force SSL
 
-#All to index.php
+# Remove trailing slashes
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)\/$ /$1 [L,R=301]
+# End Remove trailing slashes
+
+# All to index.php
 RewriteCond %{REQUEST_URI} !^/index\.php$ [NC]
 RewriteRule ^(.*)$ /index.php?resource=$1 [L,QSA]
-#End All to index.php
+# End All to index.php
